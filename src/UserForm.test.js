@@ -15,3 +15,19 @@ test('it shows two inputs and a button', () => {
     expect(inputs).toHaveLength(2)
     expect(button).toBeInTheDocument()
 });
+
+test('its calls onUserAdd when the form is submitted', async() => {
+    // Try to render my component
+    render(<UserForm />);
+
+    // Find the two inputs
+    const [ nameInput, emailInput ] = screen.getAllByRole('textbox');
+
+    // Simulate typing in a name
+    await user.click(nameInput)
+    await user.keyboard('Erika')
+
+    // Simulate typing in an email
+    await user.click(emailInput)
+    await user.keyboard('erika@gmail.com')
+})
