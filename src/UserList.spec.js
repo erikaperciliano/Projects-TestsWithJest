@@ -17,5 +17,17 @@ it('render one row per user', () => {
 })
 
 it('render the email and  name of each user', () => {
+    const users = [
+        { name: 'erika', email: 'erika@gmail.com' },
+        { name: 'raquel', email: 'raquel@gmail.com' }
+    ]
+    render(<UserList users={users}/>)
 
+    for(let user of users) {
+        const name = screen.getByRole('cell', { name: user.name });
+        const email = screen.getByRole('cell', { name: user.email });
+
+        expect(name).toBeInTheDocument();
+        expect(email).toBeInTheDocument();
+    }
 })
