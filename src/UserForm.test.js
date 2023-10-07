@@ -59,10 +59,10 @@ test("empties the two inputs when form is submitted", async() => {
     const button = screen.getByRole('button')
 
     await user.click(nameInput);
-    await user.keyboard('');
+    await user.keyboard('erika');
 
     await user.click(emailInput);
-    await user.keyboard('');
+    await user.keyboard('erika@gmail.com');
 
     await user.click(button);
 
