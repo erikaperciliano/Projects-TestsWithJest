@@ -17,10 +17,17 @@ const renderComponent = () => {
             <RepositoriesListItem  repository={repository}/>
         </MemoryRouter>
     );
+
+    return { repository }
 }
     it('shows a link to the github homepage for this repository', async () => {
-        renderComponent();
+        const { repository } = renderComponent();
 
         await screen.findByRole('img', { name: /javascript/i})
+
+        const link = screen.getByRole('link', {
+            name: /github repository/i
+        });
+        expect(link).toHaveAttribute('href', repository.html_url)
     })
 
