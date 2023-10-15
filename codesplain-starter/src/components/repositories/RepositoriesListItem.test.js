@@ -31,3 +31,10 @@ const renderComponent = () => {
         expect(link).toHaveAttribute('href', repository.html_url)
     })
 
+    if('shows a fileicon with the appropriate icon', async () => {
+        renderComponent();
+
+        const icon = await screen.findByRole('img', { name: /javascript/i });
+
+        expect(icon).toHaveClass('js-icon');
+    });
