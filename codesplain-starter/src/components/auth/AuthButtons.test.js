@@ -3,12 +3,13 @@ import { MemoryRouter } from "react-router-dom";
 import { createServer } from "../../test/server";
 import AuthButtons from "./AuthButtons";
 
-const renderComponent = () => {
-    return render(
+const renderComponent = async () => {
+    render(
         <MemoryRouter>
             <AuthButtons />
         </MemoryRouter>
     );
+    await screen.findAllByRole('link');
 }
 
 describe('when user is not signed in', () => {
@@ -23,12 +24,29 @@ createServer([
 ]);
 
     test('signed in, sign in and sign up are visible', async() => {
-        renderComponent();
-        await screen.findAllByRole('link');
+        await renderComponent();
+
+        const signInButton = screen.getByRole('link', {
+            name: /sign in/i
+        });
+        const signUpButton = screen.getByRole('link', {
+            name: /sign up/i
+        });
+
+        expect(signInButton).toBeInTheDocument();
+        expect(signInButton).toHaveAttribute('href', '/signin');
+
+        expect(signUpButton).toBeInTheDocument();
+        expect(signUpButton).toHaveAttribute('href', '/signup');
     });
     test('signed in, sign out is not visible', async() => {
-        renderComponent();
-        await screen.findAllByRole('link');
+        await renderComponent();
+
+        const signOutButton = screen.queryByRole('link', {
+            name: /sign out/i
+        });
+
+        expect(signOutButton).not.toBeInTheDocument();
     });
 });
 
