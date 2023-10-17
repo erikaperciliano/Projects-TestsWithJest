@@ -50,23 +50,42 @@ createServer([
     });
 });
 
-/*describe('when user is asigned in', () => {
+describe.only('when user is asigned in', () => {
 // createServer() --> GET '/api/user' --> { user: {id: 3, email:'asdf@a.com' }}
 createServer([
     {
         path: '/api/user',
         res: () => {
-            return { user: null };
+            return { user: { id: 3, email: 'asdf@asdf.com' } };
         },
     },
 ]);
-    test('when user is signed in, sign in and sign up are not visible', async() => {
-        console.log('Test 3');
+    test('sign in and sign up are not visible', async() => {
+        await renderComponent();
+
+        const signInButton = screen.queryByRole('link', {
+            name: /sign in/i
+        });
+
+        const signUpButton = screen.queryByRole('link', {
+            name: /sign up/i
+        });
+
+        expect(signInButton).not.toBeInTheDocument();
+        expect(signUpButton).not.toBeInTheDocument();
+
     });
-    test('when user is signed in, sign out is visible', async() => {
-        console.log('Test 4');
+    test('sign out is visible', async() => {
+        await renderComponent();
+
+        const signOutButton = screen.getByRole('link', {
+            name: /sign out/i
+        });
+
+        expect(signOutButton).toBeInTheDocument();
+        expect(signOutButton).toHaveAttribute('href', '/signout');
     });
-});*/
+});
 
 
 
