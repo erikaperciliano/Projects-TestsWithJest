@@ -1,13 +1,16 @@
 import { screen, render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
+import { SWRConfig } from "swr";
 import { createServer } from "../../test/server";
 import AuthButtons from "./AuthButtons";
 
 const renderComponent = async () => {
     render(
-        <MemoryRouter>
-            <AuthButtons />
-        </MemoryRouter>
+        <SWRConfig value={{ provider: () => new Map() }}>
+            <MemoryRouter>
+                <AuthButtons />
+            </MemoryRouter>
+        </SWRConfig>
     );
     await screen.findAllByRole('link');
 }
@@ -50,7 +53,7 @@ createServer([
     });
 });
 
-describe.only('when user is asigned in', () => {
+describe('when user is asigned in', () => {
 // createServer() --> GET '/api/user' --> { user: {id: 3, email:'asdf@a.com' }}
 createServer([
     {
